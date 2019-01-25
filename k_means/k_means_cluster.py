@@ -14,6 +14,7 @@ import sys
 sys.path.append("../tools/")
 from feature_format import featureFormat, targetFeatureSplit
 from sklearn.cluster import KMeans
+from sklearn.preprocessing import MinMaxScaler
 import numpy as np
 
 
@@ -54,6 +55,12 @@ features_list = [poi, feature_1, feature_2]
 #features_list = [poi, feature_1, feature_2, feature_3]
 data = featureFormat(data_dict, features_list )
 poi, finance_features = targetFeatureSplit( data )
+
+### apply feature scaling from sklearn.preprocessing import MinMaxScaler
+scaler = MinMaxScaler()
+scaler.fit(finance_features)
+print "After rescaling,the \"salary\"($200000) and \"exercised_stock_options\"($1 million) \
+features is %r" % (scaler.transform([[200000.,1000000.]]))
 
 
 ### in the "clustering with 3 features" part of the mini-project,
